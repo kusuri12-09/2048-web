@@ -8,11 +8,48 @@
 </head>
 <body>
   <main>
-    <header><div><h1>2048<span>.</span></h1></div><div class="scores"><div>Score<strong id="score">0</strong></div><div>Best<strong id="best">0</strong></div></div></header>
+    <header>
+      <button class="settings-button" type="button" aria-label="설정" title="설정">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="m9.5 3-.5 2a7 7 0 0 0-1.5.9l-2-.6L3 9.6l1.5 1.4a7 7 0 0 0 0 2L3 14.4l2.5 4.3 2-.6A7 7 0 0 0 9 19l.5 2h5l.5-2a7 7 0 0 0 1.5-.9l2 .6 2.5-4.3-1.5-1.4a7 7 0 0 0 0-2L21 9.6l-2.5-4.3-2 .6A7 7 0 0 0 15 5l-.5-2z"/>
+          <circle cx="12" cy="12" r="3"/>
+        </svg>
+      </button>
+      <div><h1>2048<span>.</span></h1></div><div class="scores"><div>Score<strong id="score">0</strong></div><div>Best<strong id="best">0</strong></div></div>
+    </header>
     <section class="intro"><button id="restart">New Game ↗</button></section>
     <div class="board-wrap"><div id="board" role="group" aria-label="2048 게임판"></div><div id="overlay" hidden><h2 id="message"></h2><p id="detail"></p><button id="overlay-action"></button></div></div>
     <p id="status" class="sr-only" aria-live="polite"></p>
   </main>
+  <dialog id="settings-modal" aria-labelledby="settings-title">
+    <div class="modal-panel">
+      <h2 id="settings-title">설정</h2>
+      <button id="open-theme" class="setting-item" type="button">
+        <svg class="setting-icon theme-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="4"/>
+          <path d="M12 2v2m0 16v2M2 12h2m16 0h2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/>
+        </svg>
+        <svg class="setting-icon theme-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M20.8 13.2A9 9 0 0 1 10.8 3.2a9 9 0 1 0 10 10Z"/>
+        </svg>
+        <span>테마 선택</span>
+      </button>
+      <button class="setting-item" type="button" aria-disabled="true">
+        <svg class="setting-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 3a9 9 0 1 0 0 18h1a2 2 0 0 0 1.5-3.3 1.5 1.5 0 0 1 1.1-2.5H18a3 3 0 0 0 3-3C21 7.1 17 3 12 3Z"/>
+          <circle cx="7.5" cy="10" r="1"/><circle cx="10.5" cy="7" r="1"/><circle cx="15" cy="7.5" r="1"/><circle cx="17.5" cy="11" r="1"/>
+        </svg>
+        <span>커스텀</span>
+      </button>
+    </div>
+  </dialog>
+  <dialog id="theme-modal" aria-label="테마 선택">
+    <div class="modal-panel theme-options" role="radiogroup" aria-label="테마">
+      <label class="theme-card light-preview"><span>Light</span><span class="preview-tiles" aria-hidden="true"><i></i><i></i><i></i><i></i></span><input type="radio" name="theme" value="light" checked aria-label="Light"></label>
+      <label class="theme-card dark-preview"><span>Dark</span><span class="preview-tiles" aria-hidden="true"><i></i><i></i><i></i><i></i></span><input type="radio" name="theme" value="dark" aria-label="Dark"></label>
+    </div>
+  </dialog>
   <script src="game.js"></script>
+  <script src="settings.js"></script>
 </body>
 </html>

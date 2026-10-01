@@ -83,6 +83,7 @@ if (typeof document !== 'undefined') {
   }
 
   document.addEventListener('keydown', event => {
+    if (document.querySelector('dialog[open]')) return;
     const direction = { ArrowLeft: 'left', ArrowRight: 'right', ArrowUp: 'up', ArrowDown: 'down' }[event.key];
     if (direction && !event.ctrlKey && !event.metaKey && !event.altKey) { event.preventDefault(); move(direction); }
   });

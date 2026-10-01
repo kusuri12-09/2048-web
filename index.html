@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>2048 · 숫자를 모으는 작은 즐거움</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <header><div><h1>2048<span>.</span></h1></div><div class="scores"><div>Score<strong id="score">0</strong></div><div>Best<strong id="best">0</strong></div></div></header>
+    <section class="intro"><button id="restart">New Game ↗</button></section>
+    <div class="board-wrap"><div id="board" role="group" aria-label="2048 게임판"></div><div id="overlay" hidden><h2 id="message"></h2><p id="detail"></p><button id="overlay-action"></button></div></div>
+    <p id="status" class="sr-only" aria-live="polite"></p>
+  </main>
+  <script src="game.js"></script>
+</body>
+</html>

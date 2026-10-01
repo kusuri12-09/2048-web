@@ -1,0 +1,18 @@
+const assert = require('node:assert/strict');
+const { mergeLine, moveBoard, canMove } = require('./game');
+assert.deepEqual(mergeLine([2, 2, 2, 2]), { line: [4, 4, 0, 0], points: 8 });
+assert.deepEqual(mergeLine([2, 0, 2, 4]), { line: [4, 4, 0, 0], points: 4 });
+assert.deepEqual(mergeLine([4, 4, 8, 0]), { line: [8, 8, 0, 0], points: 8 });
+const board = [2, 2, 0, 0, ...Array(12).fill(0)];
+assert.deepEqual(moveBoard(board, 'right').board.slice(0, 4), [0, 0, 0, 4]);
+assert.equal(moveBoard(board, 'right').points, 4);
+assert.deepEqual(board.slice(0, 4), [2, 2, 0, 0]);
+const vertical = [2,0,0,0,2,0,0,0,...Array(8).fill(0)];
+assert.equal(moveBoard(vertical, 'up').board[0], 4);
+assert.equal(moveBoard(vertical, 'down').board[12], 4);
+assert.equal(moveBoard([4,0,0,0,...Array(12).fill(0)], 'left').changed, false);
+const stuck = [2,4,2,4,4,2,4,2,2,4,2,4,4,2,4,2];
+assert.equal(canMove(stuck), false);
+assert.equal(canMove(stuck.map((value, index) => index === 1 ? 2 : value)), true);
+assert.equal(canMove(Array(16).fill(0)), true);
+console.log('2048 병합, 방향 이동, 점수, 게임 종료 테스트 통과');

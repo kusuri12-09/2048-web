@@ -30,7 +30,10 @@ function canMove(board) {
   return board.includes(0) || ['left', 'up'].some(direction => moveBoard(board, direction).changed);
 }
 
-if (typeof module !== 'undefined') module.exports = { mergeLine, moveBoard, canMove };
+function validGameState(state) {
+  return state && Array.isArray(state.board) && state.board.length === 16 && state.board.every(value => value === 0 || Number.isSafeInteger(value) && value >= 2 && Number.isInteger(Math.log2(value))) && Number.isSafeInteger(state.score) && state.score >= 0 && typeof state.continued === 'boolean';
+}
+if (typeof module !== 'undefined') module.exports = { mergeLine, moveBoard, canMove, validGameState };
 
 if (typeof document !== 'undefined') {
   const $ = id => document.getElementById(id);
@@ -45,6 +48,7 @@ if (typeof document !== 'undefined') {
   }
 
   function render(newIndex) {
+    try { localStorage.setItem('2048-game', JSON.stringify({ board, score, continued })); } catch {}
     $('board').replaceChildren(...board.map((value, index) => {
       const tile = document.createElement('div');
       tile.className = `tile${index === newIndex ? ' new' : ''}${value > 2048 ? ' high' : ''}`;
@@ -98,5 +102,12 @@ if (typeof document !== 'undefined') {
     move(Math.abs(dx) > Math.abs(dy) ? dx > 0 ? 'right' : 'left' : dy > 0 ? 'down' : 'up');
   });
   $('board').addEventListener('pointercancel', () => { touchStart = null; });
-  restart();
+  let savedGame;
+  try { savedGame = JSON.parse(localStorage.getItem('2048-game')); } catch {}
+  if (validGameState(savedGame)) {
+    board = savedGame.board; score = savedGame.score; continued = savedGame.continued;
+    best = Math.max(best, score);
+    try { localStorage.setItem('2048-best', best); } catch {}
+    render();
+  } else restart();
 }

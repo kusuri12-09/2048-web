@@ -16,3 +16,8 @@ assert.equal(canMove(stuck), false);
 assert.equal(canMove(stuck.map((value, index) => index === 1 ? 2 : value)), true);
 assert.equal(canMove(Array(16).fill(0)), true);
 console.log('2048 병합, 방향 이동, 점수, 게임 종료 테스트 통과');
+const {validGameState} = require('./game');
+assert.equal(validGameState({board:Array(16).fill(2),score:12,continued:false}),true);
+assert.equal(validGameState({board:Array(16).fill(3),score:12,continued:false}),false);
+assert.equal(validGameState({board:Array(16).fill(2),score:-1,continued:false}),false);
+assert.equal(validGameState(null),null);

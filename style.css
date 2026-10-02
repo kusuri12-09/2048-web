@@ -19,3 +19,6 @@ body{-webkit-user-select:none;user-select:none}
 .scores>div{min-width:70px;max-width:120px;padding-left:12px;padding-right:12px}.scores strong{font-size:clamp(16px,4vw,23px);white-space:normal;overflow-wrap:anywhere}@media(max-width:420px){.scores>div{min-width:60px;max-width:100px}}
 
 @media(max-width:560px){.tile-colors-heading{margin-bottom:16px}}
+dialog,#custom-modal{scrollbar-width:thin;scrollbar-color:#938875 var(--modal);scrollbar-gutter:stable}dialog::-webkit-scrollbar,#custom-modal::-webkit-scrollbar{width:8px;height:8px}dialog::-webkit-scrollbar-track,#custom-modal::-webkit-scrollbar-track{background:transparent;margin-block:16px}dialog::-webkit-scrollbar-thumb,#custom-modal::-webkit-scrollbar-thumb{background:#938875;border:2px solid var(--modal);border-radius:999px}dialog::-webkit-scrollbar-thumb:hover,#custom-modal::-webkit-scrollbar-thumb:hover{background:#635a4e}dialog::-webkit-scrollbar-corner{background:transparent}
+dialog::-webkit-scrollbar-button,#custom-modal::-webkit-scrollbar-button{display:none;width:0;height:0}
+@supports selector(::-webkit-scrollbar){dialog,#custom-modal{scrollbar-width:auto;scrollbar-color:auto}dialog::-webkit-scrollbar-button:single-button,#custom-modal::-webkit-scrollbar-button:single-button{display:none;width:0;height:0}}

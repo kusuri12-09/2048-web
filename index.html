@@ -61,7 +61,11 @@
         <label><input type="color" id="custom-secondary">글자 색 (secondary)</label>
       </div>
       <div class="repeat-controls">
-        <label>컬러 반복 <select id="custom-repeat"><option value="false">false</option><option value="true">true</option></select></label>
+        <div class="repeat-picker"><span id="repeat-label">컬러 반복</span><div class="repeat-dropdown">
+          <button id="repeat-trigger" type="button" aria-labelledby="repeat-label repeat-value" aria-haspopup="listbox" aria-expanded="false"><span id="repeat-value">false</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
+          <div id="repeat-menu" role="listbox" aria-labelledby="repeat-label" hidden><button type="button" role="option" data-repeat="false" aria-selected="true">false</button><button type="button" role="option" data-repeat="true" aria-selected="false">true</button></div>
+          <select id="custom-repeat" hidden aria-hidden="true" tabindex="-1"><option value="false">false</option><option value="true">true</option></select>
+        </div></div>
         <div class="period-control"><label for="custom-period">반복 단위</label><div class="number-stepper"><button id="period-down" type="button" aria-label="반복 단위 줄이기" disabled>−</button><input id="custom-period" type="number" min="1" max="16" step="1" value="11" required disabled aria-describedby="period-error"><button id="period-up" type="button" aria-label="반복 단위 늘리기" disabled>+</button></div></div>
       </div>
       <p id="period-error" role="alert"></p>

@@ -95,9 +95,41 @@ if (typeof document !== 'undefined') {
     }));
   }
   get('custom-repeat').value = String(custom.repeat);
+  const repeatOptions = [...document.querySelectorAll('[data-repeat]')];
+  function closeRepeatMenu() {
+    get('repeat-menu').hidden = true;
+    get('repeat-trigger').setAttribute('aria-expanded', 'false');
+  }
+  function syncRepeatMenu() {
+    get('repeat-value').textContent = String(custom.repeat);
+    repeatOptions.forEach(option => option.setAttribute('aria-selected', String(option.dataset.repeat === String(custom.repeat))));
+  }
+  get('repeat-trigger').addEventListener('click', () => {
+    const opening = get('repeat-menu').hidden;
+    get('repeat-menu').hidden = !opening;
+    get('repeat-trigger').setAttribute('aria-expanded', String(opening));
+    if (opening) repeatOptions[custom.repeat ? 1 : 0].focus();
+  });
+  repeatOptions.forEach((option, index) => {
+    option.addEventListener('click', () => {
+      get('custom-repeat').value = option.dataset.repeat;
+      get('custom-repeat').dispatchEvent(new Event('change', { bubbles: true }));
+      closeRepeatMenu(); get('repeat-trigger').focus();
+    });
+    option.addEventListener('keydown', event => {
+      if (event.key === 'ArrowDown' || event.key === 'ArrowUp') { event.preventDefault(); repeatOptions[1 - index].focus(); }
+    });
+  });
+  document.addEventListener('click', event => { if (!event.target.closest('.repeat-dropdown')) closeRepeatMenu(); });
+  get('custom-modal').addEventListener('keydown', event => {
+    if (event.key === 'Escape' && !get('repeat-menu').hidden) { event.preventDefault(); event.stopPropagation(); closeRepeatMenu(); get('repeat-trigger').focus(); }
+  });
+  get('custom-modal').addEventListener('close', closeRepeatMenu);
+  syncRepeatMenu();
   get('custom-period').value = custom.period;
   get('custom-period').disabled = !custom.repeat;
   function syncStepper() {
+    syncRepeatMenu();
     get('period-down').disabled = !custom.repeat || custom.period <= 1;
     get('period-up').disabled = !custom.repeat || custom.period >= 16;
   }

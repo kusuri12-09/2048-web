@@ -34,7 +34,7 @@
         </svg>
         <span>테마 선택</span>
       </button>
-      <button class="setting-item" type="button" aria-disabled="true">
+      <button id="open-custom" class="setting-item" type="button">
         <svg class="setting-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <path d="M12 3a9 9 0 1 0 0 18h1a2 2 0 0 0 1.5-3.3 1.5 1.5 0 0 1 1.1-2.5H18a3 3 0 0 0 3-3C21 7.1 17 3 12 3Z"/>
           <circle cx="7.5" cy="10" r="1"/><circle cx="10.5" cy="7" r="1"/><circle cx="15" cy="7.5" r="1"/><circle cx="17.5" cy="11" r="1"/>
@@ -49,7 +49,40 @@
       <label class="theme-card dark-preview"><span>Dark</span><span class="preview-tiles" aria-hidden="true"><i></i><i></i><i></i><i></i></span><input type="radio" name="theme" value="dark" aria-label="Dark"></label>
     </div>
   </dialog>
+  <dialog id="custom-modal" aria-labelledby="custom-title">
+    <div class="modal-panel">
+      <div class="custom-heading"><h2 id="custom-title">커스텀 테마</h2><button id="reset-custom" type="button">초기화</button></div>
+      <p>변경 사항은 바로 적용되고 자동 저장됩니다.</p>
+      <div class="base-colors-heading bulk-actions"><button data-unlock="base" type="button">일괄 잠금 해제</button><button data-lock="base" type="button">일괄 잠금</button><button id="random-base-colors" type="button">랜덤</button></div>
+      <div class="custom-colors">
+        <label><input type="color" id="custom-background">배경 색상</label>
+        <label><input type="color" id="custom-primary">글자 색 (primary)</label>
+        <label><input type="color" id="custom-scoreBox">점수 박스</label>
+        <label><input type="color" id="custom-secondary">글자 색 (secondary)</label>
+      </div>
+      <div class="repeat-controls">
+        <label>컬러 반복 <select id="custom-repeat"><option value="false">false</option><option value="true">true</option></select></label>
+        <div class="period-control"><label for="custom-period">반복 단위</label><div class="number-stepper"><button id="period-down" type="button" aria-label="반복 단위 줄이기" disabled>−</button><input id="custom-period" type="number" min="1" max="16" step="1" value="11" required disabled aria-describedby="period-error"><button id="period-up" type="button" aria-label="반복 단위 늘리기" disabled>+</button></div></div>
+      </div>
+      <p id="period-error" role="alert"></p>
+      <div class="tile-colors-heading"><h3>타일 색상</h3><div class="bulk-actions"><button data-unlock="tiles" type="button">일괄 잠금 해제</button><button data-lock="tiles" type="button">일괄 잠금</button><button id="random-colors" type="button">랜덤</button></div></div>
+      <div id="tile-color-list"></div>
+    </div>
+  </dialog>
+  <dialog id="reset-modal" aria-labelledby="reset-message">
+    <div class="modal-panel">
+      <h2 id="reset-message">정말 모든 컬러를 초기화할까요?</h2>
+      <div class="reset-actions"><button id="cancel-reset" type="button">취소</button><button id="confirm-reset" class="danger-button" type="button">초기화</button></div>
+    </div>
+  </dialog>
+  <dialog id="unlock-modal" aria-labelledby="unlock-message">
+    <div class="modal-panel"><h2 id="unlock-message">모든 잠금을 해제하시겠습니까?</h2>
+      <label class="skip-warning"><input type="checkbox" id="skip-unlock-warning">다시 보지 않기</label>
+      <div class="reset-actions"><button id="cancel-unlock" type="button">취소</button><button id="confirm-unlock" class="danger-button" type="button">잠금 해제</button></div>
+    </div>
+  </dialog>
   <script src="game.js"></script>
   <script src="settings.js"></script>
+  <script src="custom.js"></script>
 </body>
 </html>

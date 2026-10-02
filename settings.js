@@ -4,17 +4,20 @@ const themeInputs = document.querySelectorAll('input[name="theme"]');
 
 function applyTheme(theme) {
   document.documentElement.dataset.theme = theme;
+  if (theme === 'light' || theme === 'dark') {
+    try { localStorage.setItem('2048-base-theme', theme); } catch {}
+  }
   themeInputs.forEach(input => { input.checked = input.value === theme; });
 }
 
 let savedTheme = 'light';
-try { savedTheme = localStorage.getItem('2048-theme') === 'dark' ? 'dark' : 'light'; } catch {}
+try { const stored = localStorage.getItem('2048-theme'); savedTheme = ['dark', 'custom'].includes(stored) ? stored : 'light'; } catch {}
 applyTheme(savedTheme);
 
 document.querySelector('.settings-button').addEventListener('click', () => settingsModal.showModal());
 document.getElementById('open-theme').addEventListener('click', () => themeModal.showModal());
 
-for (const modal of [settingsModal, themeModal]) {
+for (const modal of [settingsModal, themeModal, document.getElementById('custom-modal'), document.getElementById('reset-modal'), document.getElementById('unlock-modal')].filter(Boolean)) {
   // Backdrop clicks target the dialog; clicks inside its bounds keep it open.
   let startedOutside = false;
   const isOutside = event => {

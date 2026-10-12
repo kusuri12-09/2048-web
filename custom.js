@@ -18,7 +18,7 @@ function randomizeUnlocked(colors, keys, locks, prefix, randomColor) {
 if (typeof module !== 'undefined') module.exports = { defaultCustomTheme, tileColorIndex, validCustomTheme, randomizeUnlocked };
 if (typeof document !== 'undefined') {
   const get = id => document.getElementById(id);
-  let custom = defaultCustomTheme();
+  let custom = defaultCustomTheme(document.documentElement.dataset.theme);
   try { const saved = JSON.parse(localStorage.getItem('2048-custom')); if (saved && saved.scoreBox === undefined) saved.scoreBox = '#e9e3d8'; if (saved && Array.isArray(saved.tiles) && saved.tiles.length === 16) saved.tiles.push(defaultCustomTheme().tiles[16]); if (validCustomTheme(saved)) custom = saved; } catch {}
   const customStyle = document.createElement('style');
   document.head.append(customStyle);
@@ -201,17 +201,6 @@ if (typeof document !== 'undefined') {
     save(); renderTiles();
   });
   get('open-custom').addEventListener('click', () => {
-    const theme = document.documentElement.dataset.theme;
-    if (theme !== 'custom' && theme !== (custom.baseTheme || 'light')) {
-      custom = defaultCustomTheme(theme);
-      for (const key of ['background', 'primary', 'scoreBox', 'secondary']) get(`custom-${key}`).value = custom[key];
-      get('custom-repeat').value = 'false';
-      get('custom-period').value = custom.period;
-      get('custom-period').disabled = true; syncStepper();
-      get('custom-period').setCustomValidity('');
-      get('period-error').textContent = '';
-      renderTiles(); renderBaseLocks();
-    }
     save(); get('custom-modal').showModal();
   });
   updateStyles(); renderTiles(); renderBaseLocks();
